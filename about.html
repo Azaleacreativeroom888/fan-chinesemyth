@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>アバウト | 紅霊神話</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red:       #E8363A;
+      --coral:     #FF8C6B;
+      --gold:      #F7C948;
+      --bg:        #FFF5E6;
+      --bg2:       #FDE8D8;
+      --ink:       #2D1B15;
+      --ink-light: #6B3F30;
+      --white:     #FFFFFF;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background-color: var(--bg);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cpath d='M20 60 Q30 40 40 60 Q50 80 60 60 Q70 40 80 60 Q90 80 100 60' stroke='%23E8363A' stroke-width='1.2' fill='none' opacity='0.08'/%3E%3Cpath d='M10 90 Q20 70 30 90 Q40 110 50 90 Q60 70 70 90 Q80 110 90 90 Q100 70 110 90' stroke='%23F7C948' stroke-width='1' fill='none' opacity='0.07'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── ナビ ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--red);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+      height: 56px;
+      box-shadow: 0 2px 12px rgba(232,54,58,0.3);
+    }
+
+    .nav-logo {
+      font-family: 'Noto Serif JP', serif;
+      font-weight: 900;
+      font-size: 1.2rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: background 0.2s;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      background: rgba(255,255,255,0.18);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+    }
+
+    /* ── ページヘッダー ── */
+    .page-header {
+      position: relative;
+      z-index: 1;
+      padding: 4rem 2rem 2.5rem;
+      text-align: center;
+    }
+
+    .page-header .eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.5em;
+      color: var(--coral);
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .page-header h1 {
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 900;
+      color: var(--red);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .page-header p {
+      font-size: 0.9rem;
+      color: var(--ink-light);
+      line-height: 1.8;
+    }
+
+    .gold-bar {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--coral));
+      border-radius: 2px;
+      margin: 1.2rem auto 1.5rem;
+    }
+
+    /* ── メインカラム ── */
+    .about-main {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 1.5rem 6rem;
+    }
+
+    /* ── カード共通 ── */
+    .card {
+      background: rgba(255,255,255,0.9);
+      border-radius: 16px;
+      border: 1px solid rgba(232,54,58,0.15);
+      padding: 1.6rem 1.75rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 12px rgba(45,27,21,0.06);
+    }
+
+    /* ── セクション見出し ── */
+    .section-head {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--red);
+      letter-spacing: 0.12em;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-head::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(232,54,58,0.3), transparent);
+    }
+
+    /* ── プロフィール ── */
+    .profile-text {
+      font-size: 0.92rem;
+      line-height: 1.95;
+      color: var(--ink-light);
+    }
+
+    /* ── リンクグリッド ── */
+    .link-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .link-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      background: var(--bg);
+      border: 1px solid rgba(232,54,58,0.12);
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .link-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(232,54,58,0.12);
+    }
+
+    .link-icon {
+      font-size: 1.3rem;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg2);
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+
+    .link-text { flex: 1; min-width: 0; }
+
+    .link-name {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+
+    .link-desc {
+      display: block;
+      font-size: 0.7rem;
+      color: var(--ink-light);
+      line-height: 1.5;
+    }
+
+    .link-arrow {
+      font-size: 1rem;
+      color: var(--coral);
+      flex-shrink: 0;
+      transition: transform 0.15s;
+    }
+
+    .link-card:hover .link-arrow { transform: translateX(3px); }
+
+    /* ── フォーム ── */
+    .form-intro {
+      font-size: 0.85rem;
+      color: var(--ink-light);
+      line-height: 1.85;
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group { margin-bottom: 1rem; }
+
+    .form-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 5px;
+      letter-spacing: 0.05em;
+    }
+
+    .required { color: var(--red); margin-left: 3px; }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid rgba(232,54,58,0.25);
+      border-radius: 10px;
+      color: var(--ink);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 0.88rem;
+      padding: 0.6rem 0.9rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder { color: #bbb; }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(232,54,58,0.1);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 130px;
+    }
+
+    .form-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--red);
+      border: none;
+      border-radius: 40px;
+      color: var(--white);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      padding: 0.65rem 1.8rem;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+      letter-spacing: 0.05em;
+      box-shadow: 0 4px 14px rgba(232,54,58,0.3);
+    }
+
+    .form-submit:hover {
+      background: var(--coral);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(232,54,58,0.35);
+    }
+
+    .form-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .form-success {
+      background: #FDE8D8;
+      border: 1px solid var(--coral);
+      border-radius: 10px;
+      padding: 0.9rem 1.1rem;
+      text-align: center;
+      color: var(--ink);
+      font-size: 0.88rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    .form-error-global {
+      background: #fff0f0;
+      border: 1px solid rgba(232,54,58,0.3);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      color: var(--red);
+      font-size: 0.82rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--red);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: var(--white);
+      border: 1px solid rgba(232,54,58,0.25);
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+      transition: background 0.15s;
+    }
+
+    .back-link:hover { background: var(--bg2); }
+
+    /* ── フッター ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      background: var(--ink);
+      color: var(--bg);
+      text-align: center;
+      padding: 2.5rem 2rem;
+    }
+
+    footer .footer-logo {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.1rem;
+      color: var(--gold);
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+
+    footer .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    footer .footer-links a {
+      color: var(--bg);
+      text-decoration: none;
+      font-size: 0.85rem;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+
+    footer .footer-links a:hover { opacity: 1; }
+    footer p { font-size: 0.75rem; opacity: 0.45; }
+
+    /* ── モバイル ── */
+    @media (max-width: 640px) {
+      .hamburger { display: flex; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 56px; left: 0; right: 0;
+        background: var(--red);
+        flex-direction: column;
+        padding: 1rem;
+        gap: 0.25rem;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 0.75rem 1rem; border-radius: 8px; }
+      .link-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">紅霊神話</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">ホーム</a></li>
+    <li><a href="blog.html">ブログ</a></li>
+    <li><a href="gallery.html">ギャラリー</a></li>
+    <li><a href="about.html" class="active">アバウト</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<header class="page-header">
+  <p class="eyebrow">About</p>
+  <h1>アバウト</h1>
+  <div class="gold-bar"></div>
+  <p>サイトと作者についてのページです。</p>
+</header>
+
+<main class="about-main">
+
+  <!-- プロフィール -->
+  <div class="card">
+    <div class="section-head">🪷 このサイトについて</div>
+    <p class="profile-text">
+      中国神話が好きすぎて作ったファンサイトです。<br>
+      「山海経」や「封神演義」を読みながら、マンガやイラストを描いて記録しています。<br><br>
+      龍王、鳳凰、嫦娥、盤古……神話の世界は広くて、まだまだ知らないことだらけ。間違いだらけかもしれないけど、「ここ好き！」という気持ちを大事に更新しています。
+    </p>
+  </div>
+
+  <!-- ウェブサイト -->
+  <div class="card">
+    <div class="section-head">🌐 ウェブサイト・活動</div>
+    <div class="link-grid">
+      <a class="link-card" href="https://azaleacreativeroom888.github.io" target="_blank" rel="noopener">
+        <div class="link-icon">🌸</div>
+        <div class="link-text">
+          <span class="link-name">Azalea Creative Room</span>
+          <span class="link-desc">創作活動のハブサイト</span>
+        </div>
+        <span class="link-arrow">›</span>
+      </a>
+      <a class="link-card" href="https://bsky.app/profile/azalea azalea88.bsky.social" target="_blank" rel="noopener">
+        <div class="link-icon">🦋</div>
+        <div class="link-text">
+          <span class="link-name">Bluesky</span>
+          <span class="link-desc">近況・お知らせ</span>
+        </div>
+        <span class="link-arrow">›</span>
+      </a>
+      <a class="link-card" href="https://www.pixiv.net/" target="_blank" rel="noopener">
+        <div class="link-icon">🎨</div>
+        <div class="link-text">
+          <span class="link-name">Pixiv</span>
+          <span class="link-desc">イラスト・マンガ投稿</span>
+        </div>
+        <span class="link-arrow">›</span>
+      </a>
+      <a class="link-card" href="https://kakuyomu.jp/users/azalea_azalea72" target="_blank" rel="noopener">
+        <div class="link-icon">📝</div>
+        <div class="link-text">
+          <span class="link-name">カクヨム</span>
+          <span class="link-desc">小説・文章活動</span>
+        </div>
+        <span class="link-arrow">›</span>
+      </a>
+      <a class="link-card" href="https://rookie.shonenjump.com/" target="_blank" rel="noopener">
+        <div class="link-icon">📖</div>
+        <div class="link-text">
+          <span class="link-name">ジャンプルーキー</span>
+          <span class="link-desc">マンガ投稿</span>
+        </div>
+        <span class="link-arrow">›</span>
+      </a>
+      <a class="link-card" href="https://www.youtube.com/@LilyPopins" target="_blank" rel="noopener">
+        <div class="link-icon">🎬</div>
+        <div class="link-text">
+          <span class="link-name">YouTube / LilyPopins</span>
+          <span class="link-desc">動画チャンネル</span>
+        </div>
+        <span class="link-arrow">›</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- お問い合わせフォーム -->
+  <div class="card">
+    <div class="section-head">📮 お問い合わせ</div>
+    <p class="form-intro">ご感想・ご質問などはこちらからどうぞ。<br>返信はできる範囲でお答えします。</p>
+
+    <div class="form-success" id="formSuccess">
+      🐉 メッセージを送信しました。ありがとうございます！
+    </div>
+    <div class="form-error-global" id="formError"></div>
+
+    <form id="contactForm" action="https://formspree.io/f/maqvpvoz" method="POST">
+      <div class="form-group">
+        <label class="form-label" for="name">お名前</label>
+        <input class="form-input" type="text" id="name" name="name" placeholder="名前（任意）">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="email">メールアドレス<span class="required">*</span></label>
+        <input class="form-input" type="email" id="email" name="email" placeholder="example@email.com" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="message">メッセージ<span class="required">*</span></label>
+        <textarea class="form-textarea" id="message" name="message" placeholder="メッセージを入力してください…" rows="6" required></textarea>
+      </div>
+      <button class="form-submit" type="submit" id="submitBtn">📮 送信する</button>
+    </form>
+  </div>
+
+  <a class="back-link" href="index.html">← トップページへ戻る</a>
+
+</main>
+
+<footer>
+  <div class="footer-logo">紅霊神話</div>
+  <div class="footer-links">
+    <a href="index.html">ホーム</a>
+    <a href="blog.html">ブログ</a>
+    <a href="gallery.html">ギャラリー</a>
+    <a href="about.html">アバウト</a>
+  </div>
+  <p>&copy; 2025 紅霊神話 / Azalea72. All rights reserved.</p>
+</footer>
+
+<script>
+  function toggleNav() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+
+  const form = document.getElementById('contactForm');
+  const successMsg = document.getElementById('formSuccess');
+  const errorMsg = document.getElementById('formError');
+  const submitBtn = document.getElementById('submitBtn');
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.textContent = '送信中…';
+    errorMsg.style.display = 'none';
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (res.ok) {
+        successMsg.style.display = 'block';
+        form.reset();
+        successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } else {
+        throw new Error();
+      }
+    } catch {
+      errorMsg.textContent = '送信に失敗しました。時間をおいて再度お試しください。';
+      errorMsg.style.display = 'block';
+      submitBtn.disabled = false;
+      submitBtn.textContent = '📮 送信する';
+    }
+  });
+</script>
+
+</body>
+</html>
