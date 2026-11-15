@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>封神演義のキャラメモ | 紅霊神話</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red:       #E8363A;
+      --coral:     #FF8C6B;
+      --gold:      #F7C948;
+      --bg:        #FFF5E6;
+      --bg2:       #FDE8D8;
+      --ink:       #2D1B15;
+      --ink-light: #6B3F30;
+      --white:     #FFFFFF;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background-color: var(--bg);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cpath d='M20 60 Q30 40 40 60 Q50 80 60 60 Q70 40 80 60 Q90 80 100 60' stroke='%23E8363A' stroke-width='1.2' fill='none' opacity='0.08'/%3E%3Cpath d='M10 90 Q20 70 30 90 Q40 110 50 90 Q60 70 70 90 Q80 110 90 90 Q100 70 110 90' stroke='%23F7C948' stroke-width='1' fill='none' opacity='0.07'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--red);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+      height: 56px;
+      box-shadow: 0 2px 12px rgba(232,54,58,0.3);
+    }
+
+    .nav-logo {
+      font-family: 'Noto Serif JP', serif;
+      font-weight: 900;
+      font-size: 1.2rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; list-style: none; }
+
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: background 0.2s;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { background: rgba(255,255,255,0.18); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+    }
+
+    .page-header {
+      position: relative;
+      z-index: 1;
+      padding: 4rem 2rem 2.5rem;
+      text-align: center;
+    }
+
+    .page-header .eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.5em;
+      color: var(--coral);
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .page-header h1 {
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 900;
+      color: var(--red);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .page-header p {
+      font-size: 0.9rem;
+      color: var(--ink-light);
+      line-height: 1.8;
+    }
+
+    .gold-bar {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--coral));
+      border-radius: 2px;
+      margin: 1.2rem auto 1.5rem;
+    }
+
+    .report-main {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 1.5rem 6rem;
+    }
+
+    .char-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .char-card {
+      background: rgba(255,255,255,0.92);
+      border-radius: 14px;
+      border-left: 6px solid var(--red);
+      padding: 1.2rem 1.5rem 1.3rem;
+      box-shadow: 0 2px 12px rgba(45,27,21,0.06);
+    }
+
+    .char-card:nth-child(3n+2) { border-left-color: var(--coral); }
+    .char-card:nth-child(3n)   { border-left-color: var(--gold); }
+
+    .char-name {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--red);
+      margin-bottom: 0.45rem;
+    }
+
+    .char-desc {
+      font-size: 0.9rem;
+      line-height: 1.9;
+      color: var(--ink-light);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--red);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: var(--white);
+      border: 1px solid rgba(232,54,58,0.25);
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+      transition: background 0.15s;
+    }
+
+    .back-link:hover { background: var(--bg2); }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      background: var(--ink);
+      color: var(--bg);
+      text-align: center;
+      padding: 2.5rem 2rem;
+    }
+
+    footer .footer-logo {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.1rem;
+      color: var(--gold);
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+
+    footer .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    footer .footer-links a {
+      color: var(--bg);
+      text-decoration: none;
+      font-size: 0.85rem;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+
+    footer .footer-links a:hover { opacity: 1; }
+    footer p { font-size: 0.75rem; opacity: 0.45; }
+
+    @media (max-width: 640px) {
+      .hamburger { display: flex; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 56px; left: 0; right: 0;
+        background: var(--red);
+        flex-direction: column;
+        padding: 1rem;
+        gap: 0.25rem;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 0.75rem 1rem; border-radius: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">紅霊神話</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">ホーム</a></li>
+    <li><a href="blog.html">ブログ</a></li>
+    <li><a href="gallery.html" class="active">ギャラリー</a></li>
+    <li><a href="about.html">アバウト</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleNav()" aria-label="メニュー">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<header class="page-header">
+  <p class="eyebrow">Special</p>
+  <h1>封神演義のキャラメモ</h1>
+  <div class="gold-bar"></div>
+  <p>封神演義に登場する人物のメモです。</p>
+</header>
+
+<main class="report-main">
+
+  <div class="char-list">
+
+    <div class="char-card">
+      <h2 class="char-name">姜子牙（きょうしが）／太公望</h2>
+      <p class="char-desc">崑崙山の元始天尊の弟子で、物語の中心となる軍師。釣りをして過ごしているところを周の文王に見出され、武王とともに殷を倒す戦いを率いる。封神榜（神になる者の名簿）を授かり、戦いで亡くなった人々を神として封じる役目を負う。日本では「太公望」の名で釣り人の代名詞にもなっている。</p>
+    </div>
+
+    <div class="char-card">
+      <h2 class="char-name">哪吒（なた／ナタク）</h2>
+      <p class="char-desc">李靖の三男で、霊珠子の生まれ変わり。生まれながらに怪力で、東海龍王の三男を殺してしまったことで騒ぎを招き、両親を守るために自ら命を絶つ。その後、太乙真人が蓮の花で新しい体を作って蘇らせた。火尖槍・乾坤圏・混天綾・風火輪など数々の宝貝（パオペイ）を持つ、人気の高い少年神。</p>
+    </div>
+
+    <div class="char-card">
+      <h2 class="char-name">妲己（だっき）</h2>
+      <p class="char-desc">殷の紂王の妃で、正体は千年の狐の精。女媧の命を受けて紂王に近づき、殷の政治を乱す。炮烙（ほうらく）の刑や蠆盆（たいぼん）など残酷な刑罰を考え出して紂王を溺れさせ、殷滅亡のきっかけを作った。最後は姜子牙に正体を見破られ、処刑される。</p>
+    </div>
+
+    <div class="char-card">
+      <h2 class="char-name">紂王（ちゅうおう）</h2>
+      <p class="char-desc">殷の最後の王。もともとは才能ある君主だったが、女媧の廟で詩を詠んだことで女媧の怒りを買い、妲己に心を奪われて暴君となる。酒池肉林の宴を開いたり忠臣を処刑したりして、民心が離れていく。牧野の戦いで周に敗れ、鹿台に火をかけて自害した。</p>
+    </div>
+
+    <div class="char-card">
+      <h2 class="char-name">楊戩（ようせん）</h2>
+      <p class="char-desc">玉泉山金霞洞の玉鼎真人の弟子で、周軍の主力となる武将。七十二変化の術を使いこなし、額の第三の目や、犬の哮天犬（こうてんけん）を連れていることで知られる。姜子牙を何度も助け、戦いの中で多くの功績を残した。</p>
+    </div>
+
+    <div class="char-card">
+      <h2 class="char-name">雷震子（らいしんし）</h2>
+      <p class="char-desc">周の文王の百番目の息子とされる人物。雷鳴の中で拾われ、道士の雲中子に育てられた。杏を食べて背中に風と雷の翼が生え、顔も怪異な姿になる。金の棍棒を持ち、空を飛んで戦う周軍の武将として活躍する。</p>
+    </div>
+
+    <div class="char-card">
+      <h2 class="char-name">申公豹（しんこうひょう）</h2>
+      <p class="char-desc">姜子牙と同じく元始天尊の弟子だったが、のちに敵対して殷に味方する道士。黒い虎に乗り、頭を取り外して離れた場所の様子を探れるという奇術を使う。姜子牙の運命を知りながら邪魔をするなど、物語を乱す存在として何度も登場する。</p>
+    </div>
+
+    <div class="char-card">
+      <h2 class="char-name">聞仲（ぶんちゅう）</h2>
+      <p class="char-desc">殷の太師（宰相）で、先代から三代にわたって王に仕えた忠臣。額に第三の目を持ち、金鞭などの宝貝を操る。紂王の暴政を諫めながらも、最後まで殷への忠義を貫いて戦い抜いた。</p>
+    </div>
+
+    <div class="char-card">
+      <h2 class="char-name">黄飛虎（こうひこ）</h2>
+      <p class="char-desc">殷の鎮国武成王。紂王に妻を侮辱され、ついに殷を見限って周に降った名将。周軍で多くの戦いに加わり、のちに東岳大帝（泰山の神）として封じられる。</p>
+    </div>
+
+    <div class="char-card">
+      <h2 class="char-name">李靖（りせい）</h2>
+      <p class="char-desc">哪吒の父で、陳塘関の総兵。哪吒が起こした騒動を原因に息子を恨み、その後も対立する。のちに燃燈道人から霊宝塔を授かり、哪吒の暴走を抑える役目を持つ。封神後は托塔天王となる。</p>
+    </div>
+
+    <div class="char-card">
+      <h2 class="char-name">元始天尊（げんしてんそん）</h2>
+      <p class="char-desc">崑崙山の教主で、姜子牙の師匠。封神榜を姜子牙に託し、仙界の戦いの流れを見守る。三清（元始天尊・霊宝天尊・道徳天尊）の一人とされ、通天教主とは同門の兄弟弟子にあたる。</p>
+    </div>
+
+    <div class="char-card">
+      <h2 class="char-name">通天教主（つうてんきょうしゅ）</h2>
+      <p class="char-desc">金鰲島の教主で、元始天尊の同門にあたる。多くの弟子や仙人を抱え、殷の側に立って周と戦う。万仙陣などの大きな戦いの中心人物で、物語の終盤で崑崙勢と激突する。</p>
+    </div>
+
+    <div class="char-card">
+      <h2 class="char-name">武王／姫発（ぶおう／きはつ）</h2>
+      <p class="char-desc">周の文王・姫昌の次男で、周の初代の王。父の遺志を継いで姜子牙とともに殷を倒し、周王朝を開いた。物語の中では、民のために戦う人望ある君主として描かれる。</p>
+    </div>
+
+    <div class="char-card">
+      <h2 class="char-name">文王／姫昌（ぶんおう／きしょう）</h2>
+      <p class="char-desc">周の基礎を築いた西伯侯。紂王に捕らえられて羑里（ゆうり）に幽閉され、その間に易を研究したとも伝わる。のちに渭水で釣りをしていた姜子牙を見出し、軍師として迎え入れた。</p>
+    </div>
+
+  </div>
+
+  <a class="back-link" href="gallery.html">← ギャラリーへ戻る</a>
+
+</main>
+
+<footer>
+  <div class="footer-logo">紅霊神話</div>
+  <div class="footer-links">
+    <a href="index.html">ホーム</a>
+    <a href="blog.html">ブログ</a>
+    <a href="gallery.html">ギャラリー</a>
+    <a href="about.html">アバウト</a>
+  </div>
+  <p>&copy; 2026 紅霊神話 / Azalea72. All rights reserved.</p>
+</footer>
+
+<script>
+  function toggleNav() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+</script>
+
+</body>
+</html>
