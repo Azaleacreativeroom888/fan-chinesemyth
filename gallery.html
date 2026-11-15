@@ -135,6 +135,85 @@
       margin: 1.2rem auto 1.5rem;
     }
 
+    /* ── レポートリンクボックス ── */
+    .report-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 0 1.5rem 2rem;
+    }
+
+    .report-box {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      text-decoration: none;
+      background: linear-gradient(135deg, var(--white) 0%, var(--bg2) 100%);
+      border: 2px solid var(--red);
+      border-left-width: 8px;
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 4px 16px rgba(232,54,58,0.12);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .report-box:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(232,54,58,0.22);
+    }
+
+    .report-icon {
+      font-size: 2rem;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gold);
+      border-radius: 14px;
+      flex-shrink: 0;
+    }
+
+    .report-text { flex: 1; min-width: 0; }
+
+    .report-label {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--white);
+      background: var(--coral);
+      padding: 0.1rem 0.6rem;
+      border-radius: 20px;
+      margin-bottom: 0.35rem;
+    }
+
+    .report-title {
+      display: block;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--red);
+      margin-bottom: 0.2rem;
+    }
+
+    .report-desc {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--ink-light);
+      line-height: 1.6;
+    }
+
+    .report-arrow {
+      font-size: 1.6rem;
+      color: var(--red);
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+
+    .report-box:hover .report-arrow { transform: translateX(4px); }
+
     /* ── フィルタータブ ── */
     .filter-bar {
       position: relative;
@@ -484,6 +563,19 @@
   <div class="gold-bar"></div>
   <p>中国神話をテーマに描いたマンガ・イラスト・スケッチ。</p>
 </header>
+
+<!-- 特集ページへのリンク -->
+<div class="report-wrap">
+  <a class="report-box" href="report1.html">
+    <div class="report-icon">📜</div>
+    <div class="report-text">
+      <span class="report-label">SPECIAL</span>
+      <span class="report-title">封神演義のキャラメモ</span>
+      <span class="report-desc">哪吒、姜子牙、妲己……封神演義の登場人物をまとめたメモです。</span>
+    </div>
+    <span class="report-arrow">›</span>
+  </a>
+</div>
 
 <!-- フィルタータブ -->
 <div class="filter-bar">
